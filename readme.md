@@ -7,11 +7,17 @@
 docker build -t dummy-api .
 
 # 실행
-docker run -d -p 7000:7000 --name dummy-api dummy-api
+docker run -d -p 700:7000 --name dummy-api dummy-api
 ```
 
 ### 요청
 ```bash
-https://localhost:7000
+# 베이스 url
+http://localhost:700
+
+# 고객 정보 요청 url
+http://localhost:700/person?name={name}&date={YYYY-MM}
+
+# 고객 정보 요청 url 예시
+http://localhost:700/person?name=이준혁&date=2025-10
 ```
-위의 베이스 url로 요청

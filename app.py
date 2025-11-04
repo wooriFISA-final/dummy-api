@@ -6,21 +6,41 @@ app = FastAPI(title="Manual Dummy Person API")
 
 # ✅ 여기에 직접 더미 데이터 추가
 DUMMY_DATA = {
-    ("김현우", "2025-10-20"): {
-        "name": "김현우",
-        "age": 29,
-        "email": "hyunwoo@example.com",
-        "job": "AI 연구원",
-        "bio": "데이터 기반 문제 해결을 좋아합니다.",
+    ("김현주", "2025-10"): {
+        "name": "김현주",
+        "date": "2025-10",
+        "salary": 5000000,
+        "house_contract": True,
+        "tenant_status": True,
+        "owner_name": "김현주",
+        "other_house_owned": False,
+        "first_house_purchase": False,
+        "discount_category": "부양 없음"
     },
+
+    ("이준혁", "2025-10"): {
+        "name": "이준혁",
+        "date": "2025-10",
+        "salary": 0,
+        "house_contract": False,
+        "tenant_status": False,
+        "owner_name": "None",
+        "other_house_owned": False,
+        "first_house_purchase": True,
+        "discount_category": "부양 있음"
+    }
 }
 
 class PersonResponse(BaseModel):
     name: str
-    age: int
-    email: str
-    job: str
-    bio: str
+    date: str
+    salary: int
+    house_contract: bool
+    tenant_status: bool
+    owner_name: str
+    other_house_owned: bool
+    first_house_purchase: bool
+    discount_category: str
 
 @app.get("/person", response_model=PersonResponse)
 def get_person(name: str = Query(...), date: str = Query(...)):
