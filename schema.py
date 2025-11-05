@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field, ConfigDict
 
 
-class consumeInfo(BaseModel):
+class ConsumeInfo(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
     name: str
@@ -59,3 +59,28 @@ class consumeInfo(BaseModel):
     CAT2_donation_event: int = Field(..., alias="CAT2_경조사/기부")
     CAT2_overseas_shopping: int = Field(..., alias="CAT2_해외 직구")
     CAT2_finance_fee: int = Field(..., alias="CAT2_금융 수수료")
+
+
+class DepositInfo(BaseModel):
+    internet_banking: bool                # 인터넷 뱅킹 사용여부
+    sms_agree: bool                       # sms 수신동의 여부
+    has_woori_account: bool               # 지난 1년간 우리은행 계좌 보유 여부
+    has_saving_product: bool              # 지난 1년간 예적금 상품 보유 여부
+    open_banking: bool                    # open 뱅킹 서비스 가입여부
+
+
+class SavingInfo(BaseModel):
+    is_corporate_employee: bool               # 단체 기업 임직원 여부
+    has_pre_agreement: bool                   # 사전 협의 여부
+    has_approval_number: bool                 # 승인 번호 소지 여부
+    is_basic_living_recipient: bool           # 기초 생활 수급자 여부
+    is_low_income_class: bool                 # 차상위 계층 여부
+    is_orphan: bool                           # 소년/소녀 가장 여부
+    is_marriage_immigrant: bool               # 결혼 이민자 여부
+    is_north_defector: bool                   # 북한 이탈자 여부
+    is_earned_income_beneficiary: bool        # 근로 장려금 수급자 여부
+    is_smile_finance_recommended: bool        # 서민 금융진흥원 추천여부
+    has_military_saving_eligibility: bool     # 장병내일준비적금 가입자격 여부
+    is_below_250pct_median_income: bool       # 중위 소득 250% 이하여부
+    has_business_registration: bool           # 개인 사업자 등록증 소지 여부
+    has_npay_account: bool                    # n-pay 우리통장 가입 여부
