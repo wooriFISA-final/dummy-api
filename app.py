@@ -1,53 +1,25 @@
 from fastapi import FastAPI, HTTPException, Query
-from pydantic import BaseModel
 from datetime import date, datetime
+from dummy import DUMMY_DATA
+from schema import consumeInfo
 
 app = FastAPI(title="Manual Dummy Person API")
 
-# ✅ 여기에 직접 더미 데이터 추가
-DUMMY_DATA = {
-    ("김현주", "2025-10"): {
-        "name": "김현주",
-        "date": "2025-10",
-        "salary": 5000000,
-        "house_contract": True,
-        "tenant_status": True,
-        "owner_name": "김현주",
-        "other_house_owned": False,
-        "first_house_purchase": False,
-        "discount_category": "부양 없음"
-    },
-
-    ("이준혁", "2025-10"): {
-        "name": "이준혁",
-        "date": "2025-10",
-        "salary": 0,
-        "house_contract": False,
-        "tenant_status": False,
-        "owner_name": "None",
-        "other_house_owned": False,
-        "first_house_purchase": True,
-        "discount_category": "부양 있음"
-    }
-}
-
-class PersonResponse(BaseModel):
-    name: str
-    date: str
-    salary: int
-    house_contract: bool
-    tenant_status: bool
-    owner_name: str
-    other_house_owned: bool
-    first_house_purchase: bool
-    discount_category: str
-
-@app.get("/person", response_model=PersonResponse)
-def get_person(name: str = Query(...), date: str = Query(...)):
+@app.get("/consume", response_model=consumeInfo, response_model_by_alias=True)
+def get_consume_info(name: str = Query(...), date: str = Query(...)):
     key = (name, date)
     if key not in DUMMY_DATA:
         raise HTTPException(status_code=404, detail="No dummy data for given name and date")
-    return DUMMY_DATA[key]
+    
+    all_data = DUMMY_DATA[key]
+    consume_data = {}
+    for k, v in all_data.items():
+        if k.startswith("CAT1_") or k.startswith("CAT2_") or k=="total_spend":
+            consume_data[k] = v//10000
+        if k=="age" or k=="name" or k=="region" or k=="gender":
+            consume_data[k] = v
+
+    return consume_data
 
 @app.post("/person")
 def add_person(name: str, date: str, data: dict):
