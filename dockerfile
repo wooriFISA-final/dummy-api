@@ -8,7 +8,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir fastapi uvicorn
 
 # 4️⃣ 코드 복사
-COPY app.py .
+COPY . .
 
 # 5️⃣ 컨테이너 실행 명령
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "7000"]
