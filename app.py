@@ -13,11 +13,15 @@ def get_consume_info(name: str = Query(...), date: str = Query(...)):
     
     all_data = DUMMY_DATA[key]
     consume_data = {}
+    total_spend = 0
     for k, v in all_data.items():
-        if k.startswith("CAT1_") or k.startswith("CAT2_") or k=="total_spend":
+        if k.startswith("CAT1_") or k.startswith("CAT2_"):
             consume_data[k] = v//10000
+            total_spend += consume_data[k]
         if k=="age" or k=="name" or k=="region" or k=="gender":
             consume_data[k] = v
+    
+    consume_data['total_spend']=total_spend
 
     return consume_data
 
